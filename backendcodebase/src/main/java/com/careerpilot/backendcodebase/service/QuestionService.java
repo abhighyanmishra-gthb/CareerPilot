@@ -1,20 +1,27 @@
 package com.careerpilot.backendcodebase.service;
+
 import com.careerpilot.backendcodebase.dtos.QuestionDTO;
 import com.careerpilot.backendcodebase.dtos.QuestionResponseDTO;
 import com.careerpilot.backendcodebase.dtos.optionDTO;
 import com.careerpilot.backendcodebase.dtos.optionResponseDTO;
+import com.careerpilot.backendcodebase.entity.DifficultyLevel;
 import com.careerpilot.backendcodebase.entity.Options;
 import com.careerpilot.backendcodebase.entity.Question;
+import com.careerpilot.backendcodebase.entity.QuestionCategory;
 import com.careerpilot.backendcodebase.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
+    public List<QuestionResponseDTO> getByCategoryand;
 
     @Autowired
     public QuestionService(QuestionRepository questionRepository) {
@@ -27,9 +34,39 @@ public class QuestionService {
         return mapToDTO(savedQuestion);
 
     }
+
     public List<QuestionResponseDTO> getAllQuestions() {
         List<Question> questions = questionRepository.findAll();
         return questions.stream()
+                .map(this::mapToDTO)
+                .toList();
+    }
+
+    public List<QuestionResponseDTO> getByCategoryAndDifficulty(QuestionCategory category, DifficultyLevel difficulty) {
+        List<Question> categoryQuestion = questionRepository.findByCategoryAndDifficulty(category, difficulty);
+        if (categoryQuestion.isEmpty()) {
+            throw new RuntimeException("No question found with this Category  and difficulty Not Found");
+        }
+        return categoryQuestion.stream()
+                .map(this::mapToDTO)
+                .toList();
+    }
+    public List<QuestionResponseDTO> getByCategory(QuestionCategory category) {
+        List<Question> categoryQuestion = questionRepository.findByCategory(category );
+        if (categoryQuestion.isEmpty()) {
+            throw new RuntimeException("No question found with this Category ");
+        }
+        return categoryQuestion.stream()
+                .map(this::mapToDTO)
+                .toList();
+    }
+
+    public List<QuestionResponseDTO> getByDifficulty( DifficultyLevel difficulty) {
+        List<Question> categoryQuestion = questionRepository.findByDifficulty(  difficulty );
+        if (categoryQuestion.isEmpty()) {
+            throw new RuntimeException("No question found with this Category ");
+        }
+        return categoryQuestion.stream()
                 .map(this::mapToDTO)
                 .toList();
     }
@@ -61,4 +98,6 @@ public class QuestionService {
         }
         return question;
     }
+
+
 }
