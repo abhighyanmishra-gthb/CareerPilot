@@ -7,6 +7,7 @@ public enum QuestionCategory {
     DBMS,
     JAVA,
     PYTHON,
+    CN,
     C,
 
 }

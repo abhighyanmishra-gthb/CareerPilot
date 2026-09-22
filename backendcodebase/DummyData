@@ -1,0 +1,97 @@
+{
+  "question": "What happens when you attempt to insert a duplicate key into a java.util.HashMap?",
+  "difficulty": "MEDIUM",
+  "category": "JAVA",
+  "explanation": "HashMap keys must be unique. Inserting a key that already exists overwrites the previous value associated with that key and returns the old value.",
+  "options": [
+    {
+      "option": "Throws a DuplicateKeyException",
+      "isCorrect": false
+    },
+    {
+      "option": "The new key-value pair is silently ignored",
+      "isCorrect": false
+    },
+    {
+      "option": "The existing key's value is overwritten by the new value",
+      "isCorrect": true
+    },
+    {
+      "option": "Both key-value pairs are maintained in a linked list bucket",
+      "isCorrect": false
+    }
+  ]
+}
+
+{
+  "question": "Which condition is NOT strictly required for a deadlock to occur according to Coffman's conditions?",
+  "difficulty": "HARD",
+  "category": "OS",
+  "explanation": "The four Coffman conditions are Mutual Exclusion, Hold and Wait, No Preemption, and Circular Wait. Preemptive Scheduling actively prevents deadlocks rather than allowing them.",
+  "options": [
+    {
+      "option": "Mutual Exclusion",
+      "isCorrect": false
+    },
+    {
+      "option": "Circular Wait",
+      "isCorrect": false
+    },
+    {
+      "option": "Preemptive Scheduling",
+      "isCorrect": true
+    },
+    {
+      "option": "Hold and Wait",
+      "isCorrect": false
+    }
+  ]
+}
+{
+  "question": "Which layer of the OSI model is responsible for end-to-end communication, flow control, and error recovery?",
+  "difficulty": "MEDIUM",
+  "category": "CN",
+  "explanation": "The Transport Layer (Layer 4) manages end-to-end data delivery, multiplexing, flow control, and error detection/recovery using protocols like TCP and UDP.",
+  "options": [
+    {
+      "option": "Network Layer",
+      "isCorrect": false
+    },
+    {
+      "option": "Transport Layer",
+      "isCorrect": true
+    },
+    {
+      "option": "Data Link Layer",
+      "isCorrect": false
+    },
+    {
+      "option": "Session Layer",
+      "isCorrect": false
+    }
+  ]
+}
+{
+  "question": "A train running at the speed of 60 km/hr crosses a pole in 9 seconds. What is the length of the train in meters?",
+  "difficulty": "EASY",
+  "category": "APTITUDE",
+  "explanation": "Speed = 60 * (5/18) = 50/3 m/sec. Distance (length of train) = Speed * Time = (50/3) * 9 = 150 meters.",
+  "options": [
+    {
+      "option": "120 meters",
+      "isCorrect": false
+    },
+    {
+      "option": "180 meters",
+      "isCorrect": false
+    },
+    {
+      "option": "150 meters",
+      "isCorrect": true
+    },
+    {
+      "option": "324 meters",
+      "isCorrect": false
+    }
+  ]
+}
