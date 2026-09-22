@@ -1,0 +1,3 @@
+// that's how you make environment file and don't forget to add environment variable file in run configuration in intellij
+DATABASE_USERNAME=your own database username
+DATABASE_PASSWORD=your own database  password
