@@ -4,10 +4,9 @@ import com.careerpilot.backendcodebase.dtos.QuestionDTO;
 import com.careerpilot.backendcodebase.dtos.QuestionResponseDTO;
 import com.careerpilot.backendcodebase.dtos.optionDTO;
 import com.careerpilot.backendcodebase.dtos.optionResponseDTO;
-import com.careerpilot.backendcodebase.entity.DifficultyLevel;
-import com.careerpilot.backendcodebase.entity.Options;
-import com.careerpilot.backendcodebase.entity.Question;
-import com.careerpilot.backendcodebase.entity.QuestionCategory;
+import com.careerpilot.backendcodebase.entity.*;
+import com.careerpilot.backendcodebase.repository.CompanyQuestionRepository;
+import com.careerpilot.backendcodebase.repository.CompanyRepository;
 import com.careerpilot.backendcodebase.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,15 +21,38 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
     public List<QuestionResponseDTO> getByCategoryand;
+    private final CompanyQuestionRepository companyQuestionRepository;
+    private final CompanyRepository companyRepository;
+
 
     @Autowired
-    public QuestionService(QuestionRepository questionRepository) {
+    public QuestionService(QuestionRepository questionRepository,CompanyQuestionRepository companyQuestionRepository,CompanyRepository companyRepository) {
         this.questionRepository = questionRepository;
+        this.companyQuestionRepository=companyQuestionRepository;
+        this.companyRepository=companyRepository;
+
     }
 
     public QuestionResponseDTO addQuestion(QuestionDTO questionDTO) {
         Question question = MapToEntity(questionDTO);
         Question savedQuestion = questionRepository.save(question);
+
+        if (questionDTO.getCompanyIds() != null
+                && !questionDTO.getCompanyIds().isEmpty()) {
+
+            for (Long companyId : questionDTO.getCompanyIds()) {
+
+                Company company = companyRepository
+                        .findById(companyId)
+                        .orElseThrow(() ->new RuntimeException("Company not found with ID: " + companyId));
+
+                CompanyQuestion companyQuestion = new CompanyQuestion();
+                companyQuestion.setCompany(company);
+                companyQuestion.setQuestion(savedQuestion);
+
+                companyQuestionRepository.save(companyQuestion);
+            }
+        }
         return mapToDTO(savedQuestion);
 
     }
