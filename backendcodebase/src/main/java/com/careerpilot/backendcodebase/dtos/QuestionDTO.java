@@ -24,4 +24,5 @@ public class QuestionDTO {
     private DifficultyLevel difficulty;
     @NotBlank(message = "please enter Category of question")
     private QuestionCategory category;
+    private List<Long> companyIds = new ArrayList<>();
 }
