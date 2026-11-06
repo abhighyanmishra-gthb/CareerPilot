@@ -67,7 +67,7 @@ public class QuestionService {
     public List<QuestionResponseDTO> getByCategoryAndDifficulty(QuestionCategory category, DifficultyLevel difficulty) {
         List<Question> categoryQuestion = questionRepository.findByCategoryAndDifficulty(category, difficulty);
         if (categoryQuestion.isEmpty()) {
-            throw new RuntimeException("No question found with this Category  and difficulty Not Found");
+            throw new ResourceNotFoundException("No question found with this Category "+category+"  and difficulty"+difficulty+" Not Found");
         }
         return categoryQuestion.stream()
                 .map(this::mapToDTO)
