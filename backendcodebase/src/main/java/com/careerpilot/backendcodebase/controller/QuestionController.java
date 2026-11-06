@@ -21,15 +21,19 @@ public class QuestionController {
     public QuestionController(QuestionService questionService) {
         this.questionService = questionService;
     }
+
+
     @GetMapping("/allquestion")
     public String allWorkingFine(){
         return "all works fine";
     }
+
     @PostMapping("/create-question")
     public ResponseEntity<QuestionResponseDTO> createQuestion(@RequestBody QuestionDTO questionDTO){
        QuestionResponseDTO response= questionService.addQuestion(questionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
     @GetMapping("/get-all-questions")
     public ResponseEntity<List<QuestionResponseDTO>> getAllQuestions(){
         return ResponseEntity.status(HttpStatus.OK).body(questionService.getAllQuestions());

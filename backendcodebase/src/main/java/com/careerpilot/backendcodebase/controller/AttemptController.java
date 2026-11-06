@@ -10,13 +10,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/attempt")
 public class AttemptController {
 
-    @Autowired
-    private AttemptService attemptService;
+
+    private final AttemptService attemptService;
+
+    public AttemptController(AttemptService attemptService){
+        this.attemptService=attemptService;
+    }
 
     @PostMapping("/start")
-    public ResponseEntity<Long> startAttempt(@RequestBody StartAttemptDTO startAttemptDTO) {
-        Long attemptId = attemptService.startAttempt(startAttemptDTO);
-        return ResponseEntity.ok(attemptId);
+    public ResponseEntity<StartAttemptResponseDTO> startAttempt(@RequestBody StartAttemptDTO startAttemptDTO) {
+
+        return ResponseEntity.ok(attemptService.startAttempt(startAttemptDTO));
     }
 
     @PostMapping("/submit")
