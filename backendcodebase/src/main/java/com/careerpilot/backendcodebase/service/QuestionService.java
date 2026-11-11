@@ -1,18 +1,16 @@
 package com.careerpilot.backendcodebase.service;
 
-import com.careerpilot.backendcodebase.dtos.QuestionDTO;
-import com.careerpilot.backendcodebase.dtos.QuestionResponseDTO;
-import com.careerpilot.backendcodebase.dtos.optionDTO;
-import com.careerpilot.backendcodebase.dtos.optionResponseDTO;
+import com.careerpilot.backendcodebase.dtos.*;
 import com.careerpilot.backendcodebase.entity.*;
 import com.careerpilot.backendcodebase.repository.CompanyQuestionRepository;
 import com.careerpilot.backendcodebase.repository.CompanyRepository;
 import com.careerpilot.backendcodebase.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -92,6 +90,11 @@ public class QuestionService {
                 .map(this::mapToDTO)
                 .toList();
     }
+    public Page<QuestionResponseDTO> getByCompany(Long companyId, DifficultyLevel difficulty, QuestionCategory category, Pageable pageable) {
+        Page<Question> response=questionRepository.findByCompany(companyId,difficulty,category,pageable);
+        return response.map(this::mapToDTO);
+
+    }
 
     private QuestionResponseDTO mapToDTO(Question savedQuestion) {
         QuestionResponseDTO questionResponseDTO = new QuestionResponseDTO();
@@ -102,7 +105,21 @@ public class QuestionService {
         List<optionResponseDTO> optionResponseDTO = savedQuestion.getOptions().stream().map(opt -> new optionResponseDTO(opt.getId(), opt.getOption())).toList();
         questionResponseDTO.setOptions(optionResponseDTO);
         questionResponseDTO.setExplanation(savedQuestion.getExplanation());
+        Set<CompanyResponseDTO> company= Collections.emptySet();
+        if (savedQuestion.getCompany() != null) {
+            company = savedQuestion.getCompany().stream()
+                    .map(this::mapToCompany)
+                    .collect(Collectors.toSet());
+        }
+        questionResponseDTO.setCompanies(company);
         return questionResponseDTO;
+    }
+    private CompanyResponseDTO mapToCompany(Company company) {
+        CompanyResponseDTO companyResponseDTO = new CompanyResponseDTO();
+        companyResponseDTO.setCompanyId(company.getCompanyId());
+        companyResponseDTO.setName(company.getName());
+        companyResponseDTO.setLogoUrl(company.getLogoUrl());
+        return  companyResponseDTO;
     }
 
 
@@ -112,6 +129,8 @@ public class QuestionService {
         question.setExplanation(questionDTO.getExplanation());
         question.setDifficulty(questionDTO.getDifficulty());
         question.setCategory(questionDTO.getCategory());
+        Set<Company> fetchCompany = new HashSet<>(companyRepository.findAllById(questionDTO.getCompanyIds()));
+        question.setCompany(fetchCompany);
         for (optionDTO optiondto : questionDTO.getOptions()) {
             Options option = new Options();
             option.setOption(optiondto.getOption());
@@ -120,6 +139,7 @@ public class QuestionService {
         }
         return question;
     }
+
 
 
 }

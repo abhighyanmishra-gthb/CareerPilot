@@ -1,5 +1,6 @@
 package com.careerpilot.backendcodebase.dtos;
 
+import com.careerpilot.backendcodebase.entity.Company;
 import com.careerpilot.backendcodebase.entity.DifficultyLevel;
 import com.careerpilot.backendcodebase.entity.QuestionCategory;
 import lombok.AllArgsConstructor;
@@ -7,7 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,4 +22,5 @@ public class QuestionResponseDTO {
     private String explanation;
     private DifficultyLevel difficulty;
     private QuestionCategory category;
+    private Set<CompanyResponseDTO> companies=new HashSet<>();
 }

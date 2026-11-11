@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -23,4 +26,7 @@ public class Company {
 
     @Column(nullable = false, length = 100)
     private String name;
+    private String logoUrl;
+    @ManyToMany(mappedBy = "company",fetch = FetchType.LAZY)
+    private Set<Question> question=new HashSet<>();
 }
