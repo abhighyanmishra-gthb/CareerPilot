@@ -10,7 +10,10 @@ import lombok.Setter;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -30,6 +33,10 @@ public class Question {
     @Enumerated(EnumType.STRING)
     @Column(nullable=false,length=20)
     private QuestionCategory category;
+
+    @ManyToMany(fetch =  FetchType.LAZY)
+
+    private Set<Company> company=new HashSet<>();
 
     public void addOptions(@Valid Options option) {
         this.options.add(option);
