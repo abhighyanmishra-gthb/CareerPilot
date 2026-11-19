@@ -1,10 +1,9 @@
 package com.careerpilot.backendcodebase.entity;
 
-import com.careerpilot.backendcodebase.dtos.optionDTO;
-import jakarta.annotation.Nullable;
+
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
+
 import lombok.Getter;
 import lombok.Setter;
 

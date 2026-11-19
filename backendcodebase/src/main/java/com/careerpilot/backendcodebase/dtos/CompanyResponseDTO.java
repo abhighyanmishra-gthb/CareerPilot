@@ -11,7 +11,6 @@ public class CompanyResponseDTO {
 
 
     private Long companyId;
-
     private String name;
     private String logoUrl;
 

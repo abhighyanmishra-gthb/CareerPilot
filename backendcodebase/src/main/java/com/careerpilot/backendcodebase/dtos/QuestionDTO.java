@@ -1,7 +1,5 @@
 package com.careerpilot.backendcodebase.dtos;
-
 import com.careerpilot.backendcodebase.entity.DifficultyLevel;
-import com.careerpilot.backendcodebase.entity.Options;
 import com.careerpilot.backendcodebase.entity.QuestionCategory;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

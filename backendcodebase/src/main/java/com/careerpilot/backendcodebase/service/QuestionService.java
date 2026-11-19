@@ -2,6 +2,7 @@ package com.careerpilot.backendcodebase.service;
 
 import com.careerpilot.backendcodebase.dtos.*;
 import com.careerpilot.backendcodebase.entity.*;
+import com.careerpilot.backendcodebase.exception.ResourceNotFoundException;
 import com.careerpilot.backendcodebase.repository.CompanyQuestionRepository;
 import com.careerpilot.backendcodebase.repository.CompanyRepository;
 import com.careerpilot.backendcodebase.repository.QuestionRepository;
