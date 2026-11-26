@@ -146,6 +146,7 @@ public class AttemptService {
                 activeAttempt.setEndTime(currentTime);
 
                 mockAttemptRepository.save(activeAttempt);
+                updateMockMapping(activeAttempt.getId(), "EXPIRED");
 
             } else {
 
@@ -458,6 +459,7 @@ public class AttemptService {
             attempt.setEndTime(now);
 
             mockAttemptRepository.save(attempt);
+            updateMockMapping(attempt.getId(),"EXPIRED");
 
             return null;
         }
@@ -623,9 +625,11 @@ public class AttemptService {
         userAnswerRepository.saveAll(savedAnswers);
         mockAttemptRepository.save(attempt);
 
-        // Update predefined mock mapping after submission.
-        if ("COMPLETED".equals(attempt.getStatus())) {
-            updateMockMapping(attempt.getId(), "COMPLETED");
+
+
+        // Update predefined mock mapping after both manual and automatic submission.
+        if (isPredefinedMock(attempt.getTestType(), attempt.getSourceName())) {
+            updateMockMapping(attempt.getId(), attempt.getStatus());
         }
 
         // 8. Return result
@@ -810,7 +814,7 @@ private boolean isPredefinedMock(String testType, String sourceName) {
 
                     mapping.setStatus(status);
 
-                    if ("COMPLETED".equals(status)) {
+                    if ("COMPLETED".equals(status)|| "EXPIRED".equals(status)) {
                         mapping.setCompletedAt(LocalDateTime.now());
                     }
 
